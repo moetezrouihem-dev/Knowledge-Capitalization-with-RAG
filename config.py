@@ -10,13 +10,12 @@ EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2" # a local embedd
 CHUNK_SIZE = 400 # these are only for the pdf and the word documents, the html and excel files will be chunked differently...
 CHUNK_OVERLAP = 40
 
-TOP_K = 5  #the answer might be spread across multiple chunks
+TOP_K = 10  #the answer might be spread across multiple chunks
 SCORE_THRESHOLD = None # i'll set this later to filter out low quality answers (but i have to test it before )
 
 DOCLING_EXTENSIONS = {".pdf", ".docx"}
 BEAUTIFULSOUP_EXTENSIONS = {".html"}
 PANDAS_EXTENSIONS = {".xlsx"}
-
 
 WHOLE_DOCUMENT_WORD_THRESHOLD = 800
 
