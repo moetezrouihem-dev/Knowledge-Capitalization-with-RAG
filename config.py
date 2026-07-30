@@ -16,3 +16,17 @@ SCORE_THRESHOLD = None # i'll set this later to filter out low quality answers (
 DOCLING_EXTENSIONS = {".pdf", ".docx"}
 BEAUTIFULSOUP_EXTENSIONS = {".html"}
 PANDAS_EXTENSIONS = {".xlsx"}
+
+
+WHOLE_DOCUMENT_chunking = {
+    "Politique Qualité — SFM Technologies.docx",
+    "Template Formulaire _ Enregistrement Qualité.docx",
+    "Template Procédure SMQ.docx",
+    "Template Instruction de Travail SMQ.docx",
+    "Plan d_Audit Interne Détaillé — Session AUD-2026-001.docx",
+    "Checklist Qualité Avant Remise Livrable — BU Telco (PR1).docx",
+    "Organigramme — SFM Technologies.pdf",
+    "Cartographie des Processus.pdf",
+}
+
+XLSX_WHOLE_SHEET_CHAR_LIMIT = 1500
