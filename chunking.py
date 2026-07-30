@@ -5,7 +5,6 @@ from config import CHUNK_SIZE, CHUNK_OVERLAP, EMBEDDING_MODEL_NAME
 
 _tokenizer = None
 
-
 def _get_tokenizer():
     global _tokenizer
     if _tokenizer is None:
