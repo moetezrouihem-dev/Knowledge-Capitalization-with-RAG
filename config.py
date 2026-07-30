@@ -18,15 +18,6 @@ BEAUTIFULSOUP_EXTENSIONS = {".html"}
 PANDAS_EXTENSIONS = {".xlsx"}
 
 
-WHOLE_DOCUMENT_chunking = {
-    "Politique Qualité — SFM Technologies.docx",
-    "Template Formulaire _ Enregistrement Qualité.docx",
-    "Template Procédure SMQ.docx",
-    "Template Instruction de Travail SMQ.docx",
-    "Plan d_Audit Interne Détaillé — Session AUD-2026-001.docx",
-    "Checklist Qualité Avant Remise Livrable — BU Telco (PR1).docx",
-    "Organigramme — SFM Technologies.pdf",
-    "Cartographie des Processus.pdf",
-}
+WHOLE_DOCUMENT_WORD_THRESHOLD = 800
 
 XLSX_WHOLE_SHEET_CHAR_LIMIT = 1500
