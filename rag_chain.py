@@ -1,7 +1,12 @@
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
-
+import re
 from config import Groq_api_key, groq_model, TOP_K, SCORE_THRESHOLD
+
+CODE_PATTERN = re.compile(r"\b[A-Z]{2,}(?:-[A-Z0-9]+){1,4}\b")
+
+def _extract_codes(text):
+    return CODE_PATTERN.findall(text)
 
 SYSTEM_PROMPT = """You are an internal knowledge assistant for a company.
 Answer the user's question using ONLY the information in the context below.
@@ -45,16 +50,32 @@ def format_context(chunks):
     return "\n\n---\n\n".join(blocks)
 
 
-def retrieve(question, vectorstore, k=TOP_K, score_threshold=SCORE_THRESHOLD):
-    if score_threshold is None:
-        return vectorstore.similarity_search(question, k=k)
-
-    results = vectorstore.similarity_search_with_score(question, k=k)
-    if not results:
+def _exact_code_matches(question, vectorstore):
+    codes = _extract_codes(question)
+    if not codes:
         return []
+    all_docs = vectorstore.docstore._dict.values()
+    return [doc for doc in all_docs if any(code in doc.page_content for code in codes)]
 
-    filtered = [doc for doc, score in results if score <= score_threshold]
-    return filtered if filtered else [results[0][0]]
+
+def retrieve(question, vectorstore, k=TOP_K, score_threshold=SCORE_THRESHOLD):
+    exact_matches = _exact_code_matches(question, vectorstore)
+
+    if score_threshold is None:
+        semantic_results = vectorstore.similarity_search(question, k=k)
+    else:
+        scored = vectorstore.similarity_search_with_score(question, k=k)
+        filtered = [doc for doc, score in scored if score <= score_threshold]
+        semantic_results = filtered if filtered else ([scored[0][0]] if scored else [])
+
+    seen_content = {d.page_content for d in exact_matches}
+    combined = list(exact_matches)
+    for doc in semantic_results:
+        if doc.page_content not in seen_content:
+            combined.append(doc)
+            seen_content.add(doc.page_content)
+
+    return combined
 
 
 def answer_question(question, vectorstore, llm=None, k=TOP_K, score_threshold=SCORE_THRESHOLD):
