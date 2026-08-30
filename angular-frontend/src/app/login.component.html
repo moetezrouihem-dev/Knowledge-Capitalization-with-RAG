@@ -1,0 +1,16 @@
+<div class="auth-page">
+  <form class="auth-card" (ngSubmit)="submit()">
+    <h1>Connexion</h1>
+
+    <button type="button" class="google-btn" (click)="loginWithGoogle()">
+      <span class="google-icon">G</span> Continuer avec Google
+    </button>
+    <div class="divider"><span>ou</span></div>
+
+    <input type="email" [(ngModel)]="email" name="email" placeholder="Email" autocomplete="email" />
+    <input type="password" [(ngModel)]="password" name="password" placeholder="Mot de passe" autocomplete="current-password" />
+    @if (error()) { <p class="auth-error">{{ error() }}</p> }
+    <button type="submit" [disabled]="loading()">{{ loading() ? '...' : 'Se connecter' }}</button>
+    <p class="auth-switch">Pas de compte ? <a routerLink="/register">S'inscrire</a></p>
+  </form>
+</div>

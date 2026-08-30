@@ -1,0 +1,80 @@
+<div class="layout">
+  <app-sidebar
+    [activeConversationId]="conversationId"
+    (newConversation)="onNewConversation()"
+    (selectConversation)="onSelectConversation($event)"
+  ></app-sidebar>
+
+  <div class="page">
+    <main class="thread" #threadEl>
+      @if (messages().length === 0 && !loading()) {
+        <div class="hero">
+          <div class="orb orb-hero"><span class="orb-core"></span></div>
+          <h1>Bonjour 👋</h1>
+          <p class="hero-sub">Que voulez-vous savoir sur les documents qualité SFM ?</p>
+
+          <div class="chips">
+            @for (chip of suggestionChips; track chip) {
+              <button class="chip" (click)="askSuggestion(chip)">{{ chip }}</button>
+            }
+          </div>
+        </div>
+      }
+
+      @for (m of messages(); track $index) {
+        @if (m.role === 'USER') {
+          <div class="row row-user">
+            <div class="bubble bubble-question">{{ m.content }}</div>
+          </div>
+        } @else {
+          <div class="row row-assistant">
+            <div class="orb orb-avatar"><span class="orb-core"></span></div>
+            <div class="bubble bubble-answer">
+              <p class="answer-text">{{ m.content }}</p>
+              @if (m.sources) {
+                <div class="sources">
+                  <span class="sources-label">Sources</span>
+                  <div class="tag-row">
+                    @for (s of m.sources.split(', '); track s) {
+                      <span class="tag"><span class="tag-dot"></span>{{ s }}</span>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      }
+
+      @if (error()) {
+        <div class="error-box">{{ error() }}</div>
+      }
+
+      @if (loading()) {
+        <div class="row row-assistant">
+          <div class="orb orb-avatar orb-thinking"><span class="orb-core"></span></div>
+          <div class="bubble bubble-answer bubble-thinking">
+            <span class="think-dot"></span><span class="think-dot"></span><span class="think-dot"></span>
+          </div>
+        </div>
+      }
+    </main>
+
+    <form class="ask-bar" (ngSubmit)="submit()">
+      <input
+        type="text"
+        [(ngModel)]="question"
+        name="question"
+        placeholder="Posez votre question..."
+        [disabled]="loading()"
+        autocomplete="off"
+      />
+      <button type="submit" class="send-btn" [disabled]="loading() || !question.trim()" aria-label="Envoyer">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="19" x2="12" y2="5"></line>
+          <polyline points="6 11 12 5 18 11"></polyline>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>

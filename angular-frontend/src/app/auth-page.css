@@ -1,0 +1,130 @@
+:host {
+  --bg-black: #0a0a0c;
+  --bg-elevated: #131418;
+  --bg-elevated-2: #1a1c22;
+  --sky: #38bdf8;
+  --sky-light: #7dd3fc;
+  --sky-dim: rgba(56, 189, 248, 0.14);
+  --text-primary: #f3f5f8;
+  --text-secondary: #8b93a1;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: var(--bg-black);
+  font-family: 'Inter', sans-serif;
+}
+
+.auth-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.auth-card h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.2rem;
+  margin: 0 0 0.4rem;
+  color: var(--text-primary);
+}
+
+.auth-card input {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: var(--bg-elevated-2);
+  color: var(--text-primary);
+}
+.auth-card input::placeholder { color: var(--text-secondary); }
+.auth-card input:focus {
+  outline: none;
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px var(--sky-dim);
+}
+
+.auth-card button[type="submit"] {
+  padding: 0.7rem;
+  background: var(--sky);
+  color: #06202e;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.auth-card button[type="submit"]:hover:not(:disabled) { background: var(--sky-light); }
+.auth-card button[type="submit"]:disabled {
+  background: var(--bg-elevated-2);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+}
+
+.auth-error {
+  color: #f59e0b;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.auth-switch {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin: 0.4rem 0 0;
+}
+.auth-switch a {
+  color: var(--sky-light);
+  font-weight: 600;
+  text-decoration: none;
+}
+.auth-switch a:hover { text-decoration: underline; }
+
+/* Google button: kept as a light/outlined button per Google's own
+   branding guidance (their logo needs a light or neutral background
+   to stay recognizable) — this is the one intentionally light element
+   on an otherwise dark page. */
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem;
+  background: var(--bg-elevated-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.google-btn:hover {
+  background: var(--sky-dim);
+  border-color: var(--sky);
+}
+.google-icon { font-weight: 700; color: #4285f4; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  margin: 0.1rem 0;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}

@@ -1,0 +1,37 @@
+<div class="chat-container">
+  <h1>SFM Knowledge Assistant</h1>
+
+  <form class="ask-form" (ngSubmit)="submit()">
+    <input
+      type="text"
+      [(ngModel)]="question"
+      name="question"
+      placeholder="Ask a question about SFM's SMQ documents..."
+      [disabled]="loading()"
+    />
+    <button type="submit" [disabled]="loading() || !question.trim()">
+      {{ loading() ? 'Thinking...' : 'Ask' }}
+    </button>
+  </form>
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (result()) {
+    <div class="answer-block">
+      <p class="answer-text">{{ result()!.answer }}</p>
+
+      @if (result()!.sources.length > 0) {
+        <div class="sources">
+          <strong>Sources:</strong>
+          <ul>
+            @for (src of result()!.sources; track src.source + src.page) {
+              <li>{{ src.source }} (page {{ src.page }})</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,39 @@
+<aside class="sidebar">
+  <button class="new-chat" (click)="newConversation.emit()">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+    Nouvelle conversation
+  </button>
+
+  <div class="conv-list">
+    @for (c of conversations(); track c.id) {
+      <button
+        class="conv-item"
+        [class.active]="c.id === activeConversationId"
+        (click)="selectConversation.emit(c.id)"
+      >
+        {{ c.title }}
+      </button>
+    }
+    @if (conversations().length === 0) {
+      <p class="empty">Aucune conversation</p>
+    }
+  </div>
+
+  <div class="upload-section">
+    <label class="upload-btn" [class.disabled]="uploading()">
+      {{ uploading() ? 'Envoi...' : '+ Ajouter un document' }}
+      <input type="file" accept=".pdf,.docx,.xlsx,.html" (change)="onFileSelected($event)" [disabled]="uploading()" hidden />
+    </label>
+    @if (uploadMessage()) {
+      <p class="upload-message" [class.upload-error]="uploadError()">{{ uploadMessage() }}</p>
+    }
+  </div>
+
+  <div class="sidebar-footer">
+    <span class="user-email">{{ auth.currentEmail() }}</span>
+    <button class="logout-btn" (click)="logout()">Déconnexion</button>
+  </div>
+</aside>
