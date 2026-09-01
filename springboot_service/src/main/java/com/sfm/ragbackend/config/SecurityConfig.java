@@ -53,9 +53,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Only the two explicit no-account-needed endpoints
-                        // are public — /api/auth/me requires a valid JWT,
-                        // same as everything else.
+
                         .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
                         .requestMatchers("/oauth2/**", "/login/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
@@ -63,10 +61,7 @@ public class SecurityConfig {
                 )
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                // Google's OAuth2 login flow. STATELESS session policy
-                // above is fine here — Spring only needs a session
-                // transiently during the redirect dance itself, our real
-                // auth state afterward is the JWT, same as email/password.
+
                 .oauth2Login(oauth2 -> oauth2.successHandler(oAuth2LoginSuccessHandler));
 
         return http.build();

@@ -6,9 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-/**
- * The one place in this backend that knows the FastAPI service exists.
- */
 @Service
 public class RagClientService {
 

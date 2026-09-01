@@ -28,8 +28,6 @@ public class Message {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    // Only populated for ASSISTANT messages — comma-separated source
-    // filenames, same format as the old QueryLog used.
     @Column(columnDefinition = "TEXT")
     private String sources;
 

@@ -65,11 +65,6 @@ public class AuthController {
         return new AuthResponseDto(token, email);
     }
 
-    /**
-     * Called by Angular right after the OAuth redirect lands, once the
-     * JWT is stored — confirms the token is valid and tells Angular
-     * which email it just logged in as.
-     */
     @GetMapping("/me")
     public MeResponseDto me(@AuthenticationPrincipal User user) {
         return new MeResponseDto(user.getEmail());

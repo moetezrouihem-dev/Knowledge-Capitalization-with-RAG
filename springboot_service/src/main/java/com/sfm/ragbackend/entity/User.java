@@ -15,8 +15,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // Nullable: accounts created via Google sign-in have no password
-    // at all — only email/password registrations set this.
     @Column
     private String passwordHash;
 

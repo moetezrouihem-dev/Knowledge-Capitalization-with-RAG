@@ -18,8 +18,6 @@ public class Conversation {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // Short auto-generated label, e.g. the first ~50 characters of the
-    // first question — same idea as ChatGPT's conversation titles.
     @Column(nullable = false)
     private String title;
 

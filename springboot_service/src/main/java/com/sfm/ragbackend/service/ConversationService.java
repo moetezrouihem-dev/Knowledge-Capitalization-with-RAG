@@ -23,7 +23,6 @@ public class ConversationService {
         this.messageRepository = messageRepository;
     }
 
-    /** Finds an existing conversation the user owns, or creates a new one. */
     public Conversation getOrCreate(Long conversationId, User user, String firstQuestion) {
         if (conversationId != null) {
             return conversationRepository.findByIdAndUser(conversationId, user)

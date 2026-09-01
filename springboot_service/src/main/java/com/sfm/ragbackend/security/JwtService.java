@@ -10,13 +10,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Date;
 
-/**
- * Issues a JWT on login/register, and validates one on every
- * subsequent request (see JwtAuthFilter). The token itself just
- * carries the user's email as its "subject" — Spring looks the real
- * User row up from that on each request, the token isn't a database
- * replacement.
- */
 @Service
 public class JwtService {
 
@@ -27,9 +20,7 @@ public class JwtService {
             @Value("${app.jwt.secret}") String secret,
             @Value("${app.jwt.expiration-hours:24}") long expirationHours
     ) {
-        // The secret in application.properties must be at least 32
-        // characters (256 bits) for HS256 — jjwt throws at startup
-        // otherwise, which is a deliberate safety check, not a bug.
+
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.expirationMillis = expirationHours * 60 * 60 * 1000;
     }
@@ -44,7 +35,6 @@ public class JwtService {
                 .compact();
     }
 
-    /** Returns the email (subject) if the token is valid, throws otherwise. */
     public String extractEmail(String token) {
         return Jwts.parser()
                 .verifyWith(key)

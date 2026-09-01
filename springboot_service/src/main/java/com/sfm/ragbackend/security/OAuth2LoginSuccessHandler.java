@@ -13,14 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-/**
- * Runs once Google confirms the person's identity. Finds or creates a
- * matching User row (same table email/password login uses), issues
- * OUR OWN JWT (not Google's token — our backend never sees or stores
- * Google's token beyond this one moment), then redirects the browser
- * back to Angular with that JWT attached, so Angular can pick it up
- * exactly the same way it would after a normal email/password login.
- */
 @Component
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
@@ -48,7 +40,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         User user = userRepository.findByEmail(email).orElseGet(() -> {
             User newUser = new User();
             newUser.setEmail(email);
-            newUser.setPasswordHash(null); // Google-only account, no local password
+            newUser.setPasswordHash(null);
             return userRepository.save(newUser);
         });
 

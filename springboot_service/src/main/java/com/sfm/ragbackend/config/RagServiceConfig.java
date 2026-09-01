@@ -9,10 +9,6 @@ import org.springframework.web.client.RestClient;
 @Configuration
 public class RagServiceConfig {
 
-    // SimpleClientHttpRequestFactory (HttpURLConnection-based), not
-    // RestClient's default — the default resolved to Java's newer
-    // java.net.http.HttpClient in testing here, which had a confirmed
-    // interop problem sending POST bodies to uvicorn/FastAPI.
     @Bean
     public RestClient ragServiceRestClient(
             @Value("${rag.service.base-url}") String baseUrl
