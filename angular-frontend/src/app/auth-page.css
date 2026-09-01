@@ -89,10 +89,6 @@
 }
 .auth-switch a:hover { text-decoration: underline; }
 
-/* Google button: kept as a light/outlined button per Google's own
-   branding guidance (their logo needs a light or neutral background
-   to stay recognizable) — this is the one intentionally light element
-   on an otherwise dark page. */
 .google-btn {
   display: flex;
   align-items: center;

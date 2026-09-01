@@ -35,17 +35,10 @@ export class AuthService {
       .pipe(tap((res) => this.storeSession(res.token, res.email)));
   }
 
-  /** Full-page redirect to Spring Boot, which redirects to Google. */
   loginWithGoogle(): void {
     window.location.href = `${this.backendRoot}/oauth2/authorization/google`;
   }
 
-  /**
-   * Called by OAuthCallbackComponent once it has the token from the
-   * URL. Stores it, then confirms it's valid by asking the backend
-   * who it belongs to (also fills in currentEmail, which the redirect
-   * URL itself doesn't carry).
-   */
   completeOAuthLogin(token: string): Observable<MeResponse> {
     localStorage.setItem(TOKEN_KEY, token);
     return this.http.get<MeResponse>(`${this.baseUrl}/me`).pipe(

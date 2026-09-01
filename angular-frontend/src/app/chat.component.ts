@@ -12,9 +12,7 @@ import { RagService, AskResponse } from './rag.service';
 })
 export class ChatComponent {
   question = '';
-  // signal() is Angular's newer reactivity primitive (Angular 16+) —
-  // simpler than manually managing change detection for a plain
-  // property. Template auto-updates whenever these change.
+
   loading = signal(false);
   error = signal<string | null>(null);
   result = signal<AskResponse | null>(null);
